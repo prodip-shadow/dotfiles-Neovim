@@ -16,8 +16,10 @@ return { -- Autocompletion
     --  nvim-cmp does not ship with all sources by default. They are split
     --  into multiple repos for maintenance purposes.
     'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-nvim-lua',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
+    'hrsh7th/cmp-cmdline',
 
     -- Adds a number of user-friendly snippets
     'rafamadriz/friendly-snippets',
@@ -62,7 +64,11 @@ return { -- Autocompletion
           luasnip.lsp_expand(args.body)
         end,
       },
-      completion = { completeopt = 'menu,menuone,noinsert' },
+      preselect = cmp.PreselectMode.None,
+      completion = {
+        completeopt = 'menu,menuone,noinsert',
+        keyword_length = 1,
+      },
       -- window = {
       --     completion = cmp.config.window.bordered(),
       --     documentation = cmp.config.window.bordered(),
@@ -70,8 +76,11 @@ return { -- Autocompletion
       mapping = cmp.mapping.preset.insert {
         ['<C-j>'] = cmp.mapping.select_next_item(), -- Select the [n]ext item
         ['<C-k>'] = cmp.mapping.select_prev_item(), -- Select the [p]revious item
+        ['<C-Space>'] = cmp.mapping.complete {},
         ['<CR>'] = cmp.mapping.confirm { select = true }, -- Accept the completion with Enter.
         ['<C-c>'] = cmp.mapping.complete {}, -- Manually trigger a completion from nvim-cmp.
+        ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-d>'] = cmp.mapping.scroll_docs(4),
 
         -- Think of <c-l> as moving to the right of your snippet expansion.
         --  So if you have a snippet that's like:
@@ -114,9 +123,13 @@ return { -- Autocompletion
       },
       sources = {
         { name = 'nvim_lsp' },
+        { name = 'nvim_lua' },
         { name = 'luasnip' },
         { name = 'buffer' },
         { name = 'path' },
+      },
+      experimental = {
+        ghost_text = true,
       },
       formatting = {
         fields = { 'kind', 'abbr', 'menu' },
@@ -126,6 +139,7 @@ return { -- Autocompletion
           -- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
           vim_item.menu = ({
             nvim_lsp = '[LSP]',
+            nvim_lua = '[Lua]',
             luasnip = '[Snippet]',
             buffer = '[Buffer]',
             path = '[Path]',
@@ -134,5 +148,21 @@ return { -- Autocompletion
         end,
       },
     }
+
+    cmp.setup.cmdline('/', {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = {
+        { name = 'buffer' },
+      },
+    })
+
+    cmp.setup.cmdline(':', {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = cmp.config.sources({
+        { name = 'path' },
+      }, {
+        { name = 'cmdline' },
+      }),
+    })
   end,
 }

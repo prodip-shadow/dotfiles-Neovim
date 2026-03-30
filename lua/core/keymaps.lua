@@ -64,7 +64,7 @@ vim.keymap.set('n', '<leader>xs', ':close<CR>', opts) -- close current split win
 
 -- Navigate between splits
 vim.keymap.set('n', '<C-k>', ':wincmd k<CR>', opts)
-vim.keymap.set('n', '<C-j>', ':wincmd j<CR>', opts)
+vim.keymap.set('n', '<A-j>', ':wincmd j<CR>', opts)
 vim.keymap.set('n', '<C-h>', ':wincmd h<CR>', opts)
 vim.keymap.set('n', '<C-l>', ':wincmd l<CR>', opts)
 
@@ -123,6 +123,27 @@ end, { desc = 'Go to next diagnostic message' })
 
 vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+
+-- VS Code style text selection with arrows
+local function map_select_key(lhs, motion)
+  vim.keymap.set({ 'n', 'x' }, lhs, function()
+    local mode = vim.api.nvim_get_mode().mode
+    if mode == 'n' then
+      return 'v' .. motion
+    end
+    return motion
+  end, { expr = true, noremap = true, silent = true })
+end
+
+map_select_key('<S-Left>', 'h')
+map_select_key('<S-Right>', 'l')
+map_select_key('<S-Up>', 'k')
+map_select_key('<S-Down>', 'j')
+map_select_key('<C-S-Left>', 'b')
+map_select_key('<C-S-Right>', 'e')
+
+vim.keymap.set('i', '<C-S-Left>', '<Esc>vb', { noremap = true, silent = true })
+vim.keymap.set('i', '<C-S-Right>', '<Esc>ve', { noremap = true, silent = true })
 
 -- Save and load session
 vim.keymap.set('n', '<leader>ss', ':mksession! .session.vim<CR>', { noremap = true, silent = false })

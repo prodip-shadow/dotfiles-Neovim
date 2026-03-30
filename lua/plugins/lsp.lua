@@ -143,6 +143,7 @@ return {
         settings = {
           Lua = {
             completion = {
+              autoRequire = true,
               callSnippet = 'Replace',
             },
             runtime = { version = 'LuaJIT' },
@@ -160,18 +161,13 @@ return {
           },
         },
       },
-      pylsp = {
+      pyright = {
         settings = {
-          pylsp = {
-            plugins = {
-              pyflakes = { enabled = false },
-              pycodestyle = { enabled = false },
-              autopep8 = { enabled = false },
-              yapf = { enabled = false },
-              mccabe = { enabled = false },
-              pylsp_mypy = { enabled = false },
-              pylsp_black = { enabled = false },
-              pylsp_isort = { enabled = false },
+          python = {
+            analysis = {
+              autoImportCompletions = true,
+              useLibraryCodeForTypes = true,
+              typeCheckingMode = 'basic',
             },
           },
         },
@@ -193,6 +189,53 @@ return {
       --   },
       -- },
       ruff = {},
+      gopls = {
+        settings = {
+          gopls = {
+            completeUnimported = true,
+            usePlaceholders = true,
+          },
+        },
+      },
+      rust_analyzer = {
+        settings = {
+          ['rust-analyzer'] = {
+            completion = {
+              autoimport = {
+                enable = true,
+              },
+            },
+          },
+        },
+      },
+      ts_ls = {
+        settings = {
+          typescript = {
+            suggest = {
+              autoImports = true,
+              completeFunctionCalls = true,
+            },
+            preferences = {
+              includeCompletionsForModuleExports = true,
+              includeCompletionsForImportStatements = true,
+              includeCompletionsWithInsertText = true,
+              includePackageJsonAutoImports = 'on',
+            },
+          },
+          javascript = {
+            suggest = {
+              autoImports = true,
+              completeFunctionCalls = true,
+            },
+            preferences = {
+              includeCompletionsForModuleExports = true,
+              includeCompletionsForImportStatements = true,
+              includeCompletionsWithInsertText = true,
+              includePackageJsonAutoImports = 'on',
+            },
+          },
+        },
+      },
       jsonls = {},
       sqlls = {},
       terraformls = {},
@@ -200,10 +243,25 @@ return {
       bashls = {},
       dockerls = {},
       docker_compose_language_service = {},
-      -- tailwindcss = {},
+      tailwindcss = {},
+      cssls = {},
+      emmet_language_server = {
+        filetypes = {
+          'css',
+          'eruby',
+          'html',
+          'javascript',
+          'javascriptreact',
+          'less',
+          'sass',
+          'scss',
+          'pug',
+          'typescriptreact',
+        },
+      },
+      vue_ls = {},
       -- graphql = {},
       html = { filetypes = { 'html', 'twig', 'hbs' } },
-      -- cssls = {},
       -- ltex = {},
       -- texlab = {},
     }

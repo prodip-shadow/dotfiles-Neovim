@@ -137,7 +137,9 @@ return {
             'toggle_node',
             nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
           },
-          ['<2-LeftMouse>'] = 'open',
+          ['<LeftMouse>'] = 'noop',
+          ['<LeftRelease>'] = 'open',
+          ['<2-LeftMouse>'] = 'noop',
           ['<cr>'] = 'open',
           ['<esc>'] = 'cancel', -- close preview or floating neo-tree window
           ['P'] = { 'toggle_preview', config = { use_float = true } },
@@ -232,6 +234,9 @@ return {
         -- instead of relying on nvim autocmd events.
         window = {
           mappings = {
+            ['<LeftMouse>'] = 'noop',
+            ['<LeftRelease>'] = 'open',
+            ['<2-LeftMouse>'] = 'noop',
             ['<bs>'] = 'navigate_up',
             ['.'] = 'set_root',
             ['H'] = 'toggle_hidden',

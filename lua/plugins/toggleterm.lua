@@ -17,7 +17,7 @@ return {
       shell = nil, -- change the default shell
       float_opts = {
         border = 'rounded',
-        winblend = 0,
+        winblend = 18,
         highlights = {
           border = 'Normal',
           background = 'Normal',
@@ -30,6 +30,16 @@ return {
         end,
       },
     }
+
+    -- Ctrl + j দিয়ে last used toggleterm terminal show/hide
+    vim.keymap.set('n', '<C-j>', function()
+      require('toggleterm').toggle(0)
+    end, { noremap = true, silent = true, desc = 'Toggle Terminal' })
+    vim.keymap.set('i', '<C-j>', '<Esc><cmd>lua require("toggleterm").toggle(0)<CR>',
+      { noremap = true, silent = true, desc = 'Toggle Terminal' })
+    vim.keymap.set('t', '<C-j>', [[<C-\><C-n><cmd>lua require("toggleterm").toggle(0)<CR>]],
+      { noremap = true, silent = true, desc = 'Toggle Terminal' })
+
     vim.cmd [[
         augroup terminal_setup | au!
         autocmd TermOpen * nnoremap <buffer><LeftRelease> <LeftRelease>i

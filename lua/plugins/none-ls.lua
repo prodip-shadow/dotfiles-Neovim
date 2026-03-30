@@ -26,7 +26,22 @@ return {
 
     local sources = {
       diagnostics.checkmake,
-      formatting.prettier.with { filetypes = { 'html', 'json', 'yaml', 'markdown' } },
+      require 'none-ls.diagnostics.eslint_d',
+      formatting.prettier.with {
+        filetypes = {
+          'html',
+          'css',
+          'scss',
+          'less',
+          'javascript',
+          'javascriptreact',
+          'typescript',
+          'typescriptreact',
+          'json',
+          'yaml',
+          'markdown',
+        },
+      },
       formatting.stylua,
       formatting.shfmt.with { args = { '-i', '4' } },
       formatting.terraform_fmt,
